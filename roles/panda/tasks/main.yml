@@ -1,0 +1,31 @@
+---
+- name: copy imagepanda app
+  copy: src=image-panda dest=/tmp/ owner=root group=root mode=0755
+
+- name: npm install
+  npm: path=/tmp/image-panda
+
+- name: copy smartpanda app
+  copy: src=smart-panda dest=/tmp/ owner=root group=root mode=0755
+
+- name: npm install
+  npm: path=/tmp/smart-panda
+
+- name: "Install forever (to run Node.js app)."
+  npm: name=forever global=yes state=present
+
+- name: Link fixup for forever
+  shell: "if [ ! -f /usr/bin/node ]; then ln -s /usr/bin/nodejs /usr/bin/node; fi"
+
+- name: "Check list of Node.js apps running."
+  command: forever list
+  register: forever_list
+  changed_when: false
+
+- name: "Start image panda"
+  command: forever start /tmp/image-panda/image.js
+  when: "forever_list.stdout.find('/tmp/image-panda/image.js') == -1"
+
+- name: "Start counter panda"
+  command: forever start /tmp/smart-panda/counter.js
+  when: "forever_list.stdout.find('/tmp/smart-panda/counter.js') == -1"

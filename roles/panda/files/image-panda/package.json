@@ -1,0 +1,9 @@
+{
+  "name": "image_panda",
+  "version": "1.0.0",
+  "description": "Random panda",
+  "main": "image.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0"
+  }
+}

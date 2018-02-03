@@ -1,0 +1,9 @@
+{
+  "name": "smart_panda",
+  "version": "1.0.0",
+  "description": "Counter panda",
+  "main": "counter.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0"
+  }
+}
